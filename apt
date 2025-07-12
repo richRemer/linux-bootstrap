@@ -1,0 +1,5 @@
+# VSCode dependencies
+gnome-keyring libnspr4 libnss3
+
+# CLI utilities
+nano jq silversearcher-ag lsof

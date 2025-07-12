@@ -1,0 +1,44 @@
+#!/bin/bash -e
+
+declare tmpdir=$(mktemp -d); #trap "rm -fr $tmpdir" EXIT
+declare node_url=https://nodejs.org/dist/v{}/node-v{}-linux-x64.tar.xz
+declare node_index=https://nodejs.org/download/release/index.json
+declare cmd="${0}"
+
+help () {
+    echo "Usage:"
+    echo "  $cmd <version>"
+    echo "  $cmd --list-versions"
+    echo "  $cmd --help"
+}
+
+get () {
+    local version="$1"
+    local url=$(sed -e s/{}/$version/g <<< "$node_url")
+
+    wget -O$tmpdir/nodejs.xz "$url"
+    tar xvf $tmpdir/nodejs.xz -C $tmpdir --strip-components=1
+    cp -rT $tmpdir/include /usr/local/include
+    cp -rT $tmpdir/lib /usr/local/lib
+    cp -rT $tmpdir/share /usr/local/share
+    cp -rT $tmpdir/bin /usr/local/bin
+}
+
+list () {
+    wget -qO- $node_index \
+        | jq -r '.[]|(.version|.[1:])+(if .lts then " (LTS)" else "" end)'
+}
+
+if test $# -eq 0; then
+    echo "missing version number" >&2
+    exit 1
+elif test $# -gt 1; then
+    echo "unexpected argument -- $2" >&2
+    exit 1
+elif test "$1" = --help; then
+    help
+elif test "$1" = --list-versions; then
+    list | less
+else
+    get "$1"
+fi
