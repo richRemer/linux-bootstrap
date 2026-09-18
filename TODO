@@ -1,6 +1,2 @@
-# add to user profile
-export LESSHISTFILE=-		# stop less from generating ~/.lesshst
-export NODE_REPL_HISTORY=	# stop node from generating ~/.node_repl_history
-
 # set appropriate permissions after install
 chmod 440 /etc/sudoers.d/99-disable-admin-flag

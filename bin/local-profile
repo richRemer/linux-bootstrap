@@ -26,5 +26,6 @@ elif test $# -gt 0; then
     echo "unexpected argument -- $1" >&2
     exit 1
 else
+    cat /usr/local/share/profile.d/*.profile 2>/dev/null || true
     cat ~/.local/profile.d/*.profile 2>/dev/null || true
 fi
