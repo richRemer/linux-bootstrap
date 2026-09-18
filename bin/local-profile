@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+if test "$1" == --help; then
+    echo "Usage:"
+    echo "  local-profile [--setup]"
+    echo "  local-profile --help"
+    echo
+    echo "Print merged local profile for current user."
+    echo
+    echo "Options:"
+    echo "  --help      show this help"
+    echo "  --setup     setup current user local profile"
+elif test "$1" == --setup; then
+    mkdir -p ~/.local/profile.d
+    if ! grep -q local-profile ~/.profile; then
+        {
+            echo
+            echo "# include user local profile"
+            echo "source <(local-profile)"
+        } >> ~/.profile
+        echo "updated $HOME/.profile"
+    else
+        echo "refusing to update $HOME/.profile again" >&2
+    fi
+elif test $# -gt 0; then
+    echo "unexpected argument -- $1" >&2
+    exit 1
+else
+    cat ~/.local/profile.d/*.profile 2>/dev/null || true
+fi
