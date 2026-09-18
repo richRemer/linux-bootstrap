@@ -1,2 +1,0 @@
-# set appropriate permissions after install
-chmod 440 /etc/sudoers.d/99-disable-admin-flag
