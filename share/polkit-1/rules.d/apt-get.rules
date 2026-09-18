@@ -1,0 +1,9 @@
+const action_id = "org.dpkg.pkexec.apt-get";
+
+polkit.addRule(function(action, subject) {
+    if (action.id === action_id
+        && (subject.isInGroup("sudo") || subject.isInGroup("adm"))) {
+
+        return polkit.Result.YES;
+    }
+});

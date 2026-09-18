@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN" "https://specifications.freedesktop.org/PolicyKit/1.0/policyconfig.dtd">
+<policyconfig>
+    <action id="org.dpkg.pkexec.apt-get">
+        <defaults>
+            <allow_any>auth_admin</allow_any>
+            <allow_active>auth_admin</allow_active>
+            <allow_inactive>auth_admin</allow_inactive>
+        </defaults>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/apt-get</annotate>
+    </action>
+</policyconfig>
